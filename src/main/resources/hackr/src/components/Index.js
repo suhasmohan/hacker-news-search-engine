@@ -43,28 +43,6 @@ class Index extends Component {
                 </div>
             </header>);
     }
-
-    // render() {
-    //     return (
-    //         <div className="container h-100">
-    //             <div className="row h-100 justify-content-center align-items-center">
-    //                 <h1 className="display-1">Hackr</h1>
-    //                 <form className="col-12">
-    //                     <div className="form-group">
-    //                         <label htmlFor="formGroupExampleInput">Example label</label>
-    //                         <input type="text" className="form-control" id="formGroupExampleInput"
-    //                                placeholder="Example input"/>
-    //                     </div>
-    //                     <div className="form-group">
-    //                         <label htmlFor="formGroupExampleInput2">Another label</label>
-    //                         <input type="text" className="form-control" id="formGroupExampleInput2"
-    //                                placeholder="Another input"/>
-    //                     </div>
-    //                 </form>
-    //             </div>
-    //         </div>
-    //     );
-    // }
 }
 
 export default Index;

@@ -5,6 +5,9 @@ import TimeAgo from 'react-timeago';
 class Story extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+
+        };
     }
 
     getHighlightingHTML() {
@@ -30,6 +33,14 @@ class Story extends Component {
         return "https://news.ycombinator.com/user?id=" + this.props.data.author;
     }
 
+    getStoryTitle() {
+        return {__html: this.stringTruncate((this.props.data.title ? this.props.data.title : this.props.data.text), 200)};
+    }
+
+    stringTruncate(str, length){
+        var dots = str.length > length ? '...' : '';
+        return str.substring(0, length)+dots;
+    }
 
     render() {
         return (
@@ -38,8 +49,8 @@ class Story extends Component {
                     <div>
                         <a href={this.getURL()} target="_blank">
                             {"title" in this.props.highlighting ?
-                                <h2 dangerouslySetInnerHTML={this.getHighlightingHTML()}/> :
-                                <h2>{this.props.data.title}</h2>}
+                                <h4 dangerouslySetInnerHTML={this.getHighlightingHTML()}/> :
+                                <h4 dangerouslySetInnerHTML={this.getStoryTitle()}/>}
                         </a>
                     </div>
                     <div>

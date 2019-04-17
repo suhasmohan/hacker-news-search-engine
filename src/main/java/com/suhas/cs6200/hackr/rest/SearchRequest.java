@@ -7,6 +7,18 @@ public class SearchRequest {
 
 	String q;
 
+	public String getSort() {
+		return sort;
+	}
+
+	String sort;
+
+	int page;
+
+	public int getPage() {
+		return page;
+	}
+
 	public SearchRequest(String q) {
 		this.q = q;
 	}

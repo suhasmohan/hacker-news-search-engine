@@ -51,6 +51,15 @@ class Comment extends Component {
         this.getStoryById();
     }
 
+    getStoryTitle() {
+        return {__html: this.stringTruncate((this.state.story.title ? this.state.story.title : this.state.story.text), 200)};
+    }
+
+    stringTruncate(str, length){
+        var dots = str.length > length ? '...' : '';
+        return str.substring(0, length)+dots;
+    }
+
 
     render() {
         return (
@@ -60,18 +69,18 @@ class Comment extends Component {
                     <div>
                         <a href={this.getURL(this.state.story.id)} target="_blank">
                             {"title" in this.props.highlighting ?
-                                <h2 dangerouslySetInnerHTML={this.getHighlightingHTML()}/> :
-                                <h2>{this.state.story.title}</h2>}
+                                <h4 dangerouslySetInnerHTML={this.getHighlightingHTML()}/> :
+                                <h4 dangerouslySetInnerHTML={this.getStoryTitle()}/>}
                         </a>
                     </div>
                     <div>
-                        <a href={this.getURL()} target="_blank">{this.getURL()}</a>
+                        <a href={this.getURL(this.state.story.id)} target="_blank">{this.getURL(this.state.story.id)}</a>
                     </div>
 
                     <div>
-                        <a href={this.getHNUserURL(this.state.story.author)} target="_blank">{this.state.story.author}</a> | <a
+                        <a href={this.getHNUserURL(this.state.story.by)} target="_blank">{this.state.story.by}</a> | <a
                         href={this.getHNStoryURL(this.state.story.id)} target="_blank">{this.state.story.score} points</a> | <a
-                        href={this.getHNStoryURL(this.state.story.id)} target="_blank"><TimeAgo date={this.props.data.time}/></a>
+                        href={this.getHNStoryURL(this.state.story.id)} target="_blank" title={this.props.data.time} ><TimeAgo date={this.props.data.time}/></a>
                     </div>
 
                     <div className="comment-margin">

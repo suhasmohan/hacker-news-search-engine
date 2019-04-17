@@ -16,9 +16,12 @@ public class SearchHandler {
 	public Object getResults(Request req, Response res) {
 		SearchRequest searchRequest = new Gson().fromJson(req.body(), SearchRequest.class);
 		String searchQuery = searchRequest.getQ();
-		//searchQuery.replaceAll("+", " ");
+		String sort = searchRequest.getSort();
+		int page = searchRequest.getPage();
 		log.info("Got search term " + searchQuery);
-		SearchResponse resp = queryHandler.getResults(searchQuery);
+		log.info("Got sort " + sort);
+		log.info("Got page " + page);
+		SearchResponse resp = queryHandler.getResults(searchQuery, sort, page);
 		resp.setStatus("success");
 		return new Gson().toJson(resp);
 	}

@@ -3,27 +3,34 @@ import axios from 'axios';
 
 import Story from "./Story";
 import Comment from "./Comment";
+import ReactPaginate from 'react-paginate';
 
 class SERP extends Component {
     constructor(props) {
         super(props);
         this.state = {
             results: [],
-            highlighting: {}
+            highlighting: {},
+            numResults: 0,
+            page: 0
         }
         this.search = {value: this.props.match.params.query};
+        this.sort = {};
         this.defaultValue = this.props.match.params.query.split("+").join(" ");
     }
 
     fetchSearchResults(query) {
         axios.post('/api/search', {
-            q: query
+            q: query,
+            sort: this.sort.value,
+            page: this.state.page
         })
             .then(response => {
                 console.log(response);
                 this.setState({
                     results: response.data.results,
-                    highlighting: response.data.highlighting
+                    highlighting: response.data.highlighting,
+                    numResults: response.data.numResults
                 });
             })
             .catch(function (error) {
@@ -33,13 +40,20 @@ class SERP extends Component {
     }
 
     componentDidMount() {
-        this.fetchSearchResults(this.props.match.params.query)
+        this.fetchSearchResults(this.props.match.params.query);
     }
 
     onSubmit(e) {
         e.preventDefault();
+        let query = this.search.value.split(" ").join("+");
+        this.props.history.push("/search/" + query);
         this.fetchSearchResults(this.search.value);
 
+    }
+
+    onChange(e) {
+        e.preventDefault();
+        this.fetchSearchResults(this.search.value);
     }
 
     renderResults() {
@@ -52,6 +66,14 @@ class SERP extends Component {
 
         });
     }
+
+    handlePageClick = data => {
+        debugger;
+        this.setState({
+            page: data.selected
+        }, () => { debugger; this.fetchSearchResults(this.search.value);});
+
+    };
 
     render() {
         return (
@@ -72,11 +94,42 @@ class SERP extends Component {
                                     </button>
                                 </div>
                             </div>
+                            <div className="form-row">
+                                <label htmlFor="sortBy" className="col-sm-2 col-form-label">Sort By</label>
+                                <div className="col-sm-3">
+                                    <select className="form-control" id="sortBy" onChange={this.onChange.bind(this)}
+                                            ref={(sort) => this.sort = sort}>
+                                        <option value="relevance">Relevance</option>
+                                        <option value="time">Date</option>
+                                        <option value="score">Score</option>
+                                    </select>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
                 <hr/>
+                <span>Showing 1 - {Math.min(this.state.results.length, 10)} of {this.state.numResults.toLocaleString()} results</span>
                 {this.renderResults()}
+                <ReactPaginate
+                    previousLabel={'«'}
+                    nextLabel={'»'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageClassName={'page-item'}
+                    previousClassName={'page-item'}
+                    nextClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousLinkClassName={'page-link'}
+                    nextLinkClassName={'page-link'}
+                    pageCount={this.state.numResults/10}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={'active'}
+                />
             </div>
         );
     }

@@ -6,3 +6,19 @@ body, html {
     margin-left: 60px;
     margin-top: 40px;
 }
+
+em {
+    background: #FF742B;
+}
+
+.card {
+    background: rgb(246, 246, 239);
+}
+
+.form-row {
+    margin-top: 10px;
+}
+
+.pagination{
+    margin-top: 40px;
+}

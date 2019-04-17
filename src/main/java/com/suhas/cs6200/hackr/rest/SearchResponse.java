@@ -5,6 +5,15 @@ import java.util.Map;
 
 public class SearchResponse {
 	String status;
+	long numResults;
+
+	public long getNumResults() {
+		return numResults;
+	}
+
+	public void setNumResults(long numResults) {
+		this.numResults = numResults;
+	}
 
 	public String getStatus() {
 		return status;
