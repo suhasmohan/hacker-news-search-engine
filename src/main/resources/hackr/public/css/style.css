@@ -1,0 +1,8 @@
+body, html {
+    height: 100%;
+}
+
+.comment-margin {
+    margin-left: 60px;
+    margin-top: 40px;
+}
