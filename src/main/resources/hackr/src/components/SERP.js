@@ -109,7 +109,7 @@ class SERP extends Component {
                     </div>
                 </div>
                 <hr/>
-                <span>Showing 1 - {Math.min(this.state.results.length, 10)} of {this.state.numResults.toLocaleString()} results</span>
+                <span>Showing {this.state.page * 10 + 1} - {Math.min((this.state.page * 10) +this.state.results.length, (this.state.page +1) * 10)} of {this.state.numResults.toLocaleString()} results</span>
                 {this.renderResults()}
                 <ReactPaginate
                     previousLabel={'«'}
