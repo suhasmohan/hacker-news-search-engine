@@ -101,7 +101,7 @@ class SERP extends Component {
                                             ref={(sort) => this.sort = sort}>
                                         <option value="relevance">Relevance</option>
                                         <option value="time">Date</option>
-                                        <option value="score">Score</option>
+                                        <option value="hn_score">Score</option>
                                     </select>
                                 </div>
                             </div>
